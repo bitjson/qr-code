@@ -3,6 +3,10 @@
   contain: content;
 }
 
+#qr-container {
+  position: relative;
+}
+
 #icon-container {
   position: absolute;
   width: 100%;

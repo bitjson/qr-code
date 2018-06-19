@@ -5,14 +5,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
   <title>BitPay QR Code</title>
+  <script src="https://unpkg.com/web-animations-js@2.3.1/web-animations.min.js"></script>
   <script src="/build/bp-qr-code.js"></script>
   <script>
     console.log('Hello from index.html');
     setTimeout(() => {
       // document.getElementById('qr1').animateQRCode('RadialRipple');
-      document.getElementById('qr1').animateQRCode('MaterializeIn');
-      // document.getElementById('qr1').animateQRCode('FadeInCenterOut');
-    }, 1000)
+      // document.getElementById('qr1').animateQRCode('MaterializeIn');
+      document.getElementById('qr1').animateQRCode('FadeInCenterOut');
+    }, 1000);
   </script>
 </head>
 

@@ -319,8 +319,7 @@ export class BpQRCode {
         width="100%"
         height="100%"
         viewBox="0 0 ${pixelSize} ${pixelSize}"
-        preserveAspectRatio="xMinYMin meet"
-        style="perspective: 1000px;">
+        preserveAspectRatio="xMinYMin meet">
     <style type="text/css">
       #icon-wrapper { width: ${18 * this.maskXToYRatio}%; }
       .hide {display:none; visibility:hidden;}
@@ -382,7 +381,7 @@ export class BpQRCode {
       maskXToYRatio: number,
       legacy: boolean
     ) {
-      let svg;
+      let svg = '';
       for (let column = 0; column < count; column += 1) {
         const positionX = column + margin;
         for (let row = 0; row < count; row += 1) {
@@ -459,7 +458,7 @@ export class BpQRCode {
 
   render() {
     return (
-      <div>
+      <div id="qr-container">
         <div id="icon-container" class={this.legacy ? 'hide' : ''}>
           <div
             id="icon-wrapper"

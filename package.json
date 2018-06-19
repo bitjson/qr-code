@@ -12,6 +12,7 @@
   "scripts": {
     "build": "stencil build",
     "watch": "sd concurrent \"stencil build --dev --watch\" \"stencil-dev-server\" ",
+    "watch:prod": "sd concurrent \"stencil build --prod --watch\" \"stencil-dev-server\" ",
     "serve": "stencil-dev-server",
     "start": "npm run watch",
     "test": "jest",
