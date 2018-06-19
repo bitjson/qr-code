@@ -31,7 +31,15 @@ declare global {
 
   namespace StencilComponents {
     interface BpQrCode {
-
+      'animateQRCode': (animation?: any) => void;
+      'contents': string;
+      'getModuleCount': () => number;
+      'legacy': boolean;
+      'maskXToYRatio': number;
+      'moduleColor': string;
+      'positionCenterColor': string;
+      'positionRingColor': string;
+      'protocol': string;
     }
   }
 
@@ -54,7 +62,13 @@ declare global {
   }
   namespace JSXElements {
     export interface BpQrCodeAttributes extends HTMLAttributes {
-
+      'contents'?: string;
+      'legacy'?: boolean;
+      'maskXToYRatio'?: number;
+      'moduleColor'?: string;
+      'positionCenterColor'?: string;
+      'positionRingColor'?: string;
+      'protocol'?: string;
     }
   }
 }

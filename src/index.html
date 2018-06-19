@@ -6,12 +6,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
   <title>BitPay QR Code</title>
   <script src="/build/bp-qr-code.js"></script>
-
+  <script>
+    console.log('Hello from index.html');
+    setTimeout(() => {
+      // document.getElementById('qr1').animateQRCode('RadialRipple');
+      document.getElementById('qr1').animateQRCode('MaterializeIn');
+      // document.getElementById('qr1').animateQRCode('FadeInCenterOut');
+    }, 1000)
+  </script>
 </head>
 
-<body>
+<body style="background-color: #ddd">
 
-  <bp-qr-code contents="The Times 03/Jan/2009 Chancellor on brink of second bailout for banks"></bp-qr-code>
+  <bp-qr-code id="qr1" contents="bitcoincash:?r=https://bitpay.com/i/exampleh3mCKGUna7v9S1z" module-color="#1c7d43" position-ring-color="#13532d"
+    position-center-color="#1c7d43" mask-x-to-y-ratio="1.2" style="width: 80vw; height: 80vw; background-color: #fff">
+    <img src="assets/bch-bill.svg" slot="icon">
+  </bp-qr-code>
+
+  <bp-qr-code contents="bitcoin:?r=https://bitpay.com/i/exampleh3mCKGUna7v9S1z" module-color="#a75f06" position-ring-color="#754106"
+    position-center-color="#a75f06" style="width: 200px;">
+    <img src="assets/btc.svg" slot="icon">
+  </bp-qr-code>
+
+  <!-- alternative logo -->
+  <bp-qr-code contents="bitcoincash:?r=https://bitpay.com/i/exampleh3mCKGUna7v9S1z" module-color="#1c7d43" position-ring-color="#13532d"
+    position-center-color="#1c7d43" style="width: 200px;">
+    <img src="assets/bch.svg" slot="icon">
+  </bp-qr-code>
+
+  <bp-qr-code contents="bitcoincash:?r=https://bitpay.com/i/exampleh3mCKGUna7v9S1z" protocol="bitcoincash" style="width: 150px;"></bp-qr-code>
+
+  <bp-qr-code contents="bitcoin:?r=https://bitpay.com/i/exampleh3mCKGUna7v9S1z" protocol="bitcoin" style="width: 150px;"></bp-qr-code>
+
+  <bp-qr-code contents="bitcoin:?r=https://bitpay.com/i/exampleh3mCKGUna7v9S1z" protocol="BCH" legacy="true" style="width: 150px; height: 150px; background-color: #fff">
+    <!-- should be ignored when legacy === true -->
+    <img src="assets/bch.svg" slot="icon">
+  </bp-qr-code>
+
+  <bp-qr-code contents="bitcoincash:?r=https://bitpay.com/i/exampleh3mCKGUna7v9S1z" module-color="#53749f" position-center-color="#53749f"
+    style="width: 100px;"></bp-qr-code>
 
 </body>
 

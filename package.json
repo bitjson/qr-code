@@ -18,6 +18,7 @@
     "test.watch": "jest --watch"
   },
   "dependencies": {
+    "just-animate": "^2.5.0",
     "qrcode-generator": "^1.4.0"
   },
   "devDependencies": {
