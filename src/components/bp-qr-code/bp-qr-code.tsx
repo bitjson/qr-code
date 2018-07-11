@@ -1,4 +1,13 @@
-import { Component, Element, Prop, Method, State, Watch } from '@stencil/core';
+import {
+  Component,
+  Element,
+  Event,
+  EventEmitter,
+  Prop,
+  Method,
+  State,
+  Watch
+} from '@stencil/core';
 
 import { addPlugin, animate } from 'just-animate';
 import { AddAnimationOptions } from 'just-animate/types/lib/core/types';
@@ -129,7 +138,7 @@ const FadeInCenterOut: QRCodeAnimation = (targets, x, y, count, entity) => {
   const distance = distanceBetween(adjustedX, adjustedY, center, center);
   return {
     targets,
-    from: distance * 100,
+    from: distance * 20,
     duration: 200,
     web: {
       opacity: [0, 1]
@@ -138,23 +147,14 @@ const FadeInCenterOut: QRCodeAnimation = (targets, x, y, count, entity) => {
 };
 
 const MaterializeIn: QRCodeAnimation = (targets, _x, _y, _count, entity) => {
-  return entity === QRCodeEntity.Module
-    ? {
-        targets,
-        from: Math.random() * 200,
-        duration: 200,
-        web: {
-          opacity: [0, 1]
-        }
-      }
-    : {
-        targets,
-        from: 200,
-        duration: 200,
-        web: {
-          opacity: [0, 1]
-        }
-      };
+  return {
+    targets,
+    from: entity === QRCodeEntity.Module ? Math.random() * 200 : 200,
+    duration: 200,
+    web: {
+      opacity: [0, 1]
+    }
+  };
 };
 
 const RadialRipple: QRCodeAnimation = (targets, x, y, count, entity) => {
@@ -206,12 +206,18 @@ export class BpQRCode {
   @State() data: string;
   @State() moduleCount: number;
 
+  @Event() codeRendered: EventEmitter;
+
   /**
    * The first update must run after load to query the created shadowRoot for
    * slotted nodes.
    */
   componentDidLoad() {
     this.updateQR();
+  }
+
+  componentDidUpdate() {
+    this.codeRendered.emit();
   }
 
   @Watch('contents')
@@ -222,13 +228,21 @@ export class BpQRCode {
   @Watch('maskXToYRatio')
   @Watch('legacy')
   updateQR() {
-    const slot: HTMLSlotElement = this.qrCodeElement.shadowRoot.querySelector(
-      'slot'
-    );
-    this.data = this.generateQRCodeSVG(
-      this.contents,
-      slot ? slot.assignedNodes().length > 0 : false
-    );
+    /**
+     * E.g. Firefox, as of Firefox 61
+     */
+    const isUsingWebComponentPolyfill =
+      (this.qrCodeElement as any) === this.qrCodeElement.shadowRoot;
+    const realSlot = this.qrCodeElement.shadowRoot.querySelector('slot');
+    const hasSlot = isUsingWebComponentPolyfill
+      ? this.qrCodeElement.querySelector('[slot]')
+        ? true
+        : false
+      : realSlot
+        ? realSlot.assignedNodes().length > 0
+        : false;
+
+    this.data = this.generateQRCodeSVG(this.contents, hasSlot);
   }
 
   @Method()
@@ -320,13 +334,6 @@ export class BpQRCode {
         height="100%"
         viewBox="0 0 ${pixelSize} ${pixelSize}"
         preserveAspectRatio="xMinYMin meet">
-    <style type="text/css">
-      #icon-wrapper { width: ${18 * this.maskXToYRatio}%; }
-      .hide {display:none; visibility:hidden;}
-      .module {fill:${this.moduleColor};}
-      .position-ring {fill:${this.positionRingColor};}
-      .position-center {fill:${this.positionCenterColor};}
-    </style>
     <rect
         width="100%"
         height="100%"
@@ -337,7 +344,12 @@ export class BpQRCode {
     ${
       this.legacy
         ? void 0
-        : renderQRPositionDetectionPatterns(this.moduleCount, margin)
+        : renderQRPositionDetectionPatterns(
+            this.moduleCount,
+            margin,
+            this.positionRingColor,
+            this.positionCenterColor
+          )
     }
     ${renderQRModulesSVG(
       qr,
@@ -345,28 +357,54 @@ export class BpQRCode {
       margin,
       maskCenter,
       this.maskXToYRatio,
-      this.legacy
+      this.legacy,
+      this.moduleColor
     )}
     </svg>`;
 
-    function renderQRPositionDetectionPatterns(count: number, margin: number) {
+    function renderQRPositionDetectionPatterns(
+      count: number,
+      margin: number,
+      ringFill: string,
+      centerFill: string
+    ) {
       return `
-      ${renderQRPositionDetectionPattern(margin, margin, margin)}
-      ${renderQRPositionDetectionPattern(count - 7 + margin, margin, margin)}
-      ${renderQRPositionDetectionPattern(margin, count - 7 + margin, margin)}
+      ${renderQRPositionDetectionPattern(
+        margin,
+        margin,
+        margin,
+        ringFill,
+        centerFill
+      )}
+      ${renderQRPositionDetectionPattern(
+        count - 7 + margin,
+        margin,
+        margin,
+        ringFill,
+        centerFill
+      )}
+      ${renderQRPositionDetectionPattern(
+        margin,
+        count - 7 + margin,
+        margin,
+        ringFill,
+        centerFill
+      )}
       `;
     }
 
     function renderQRPositionDetectionPattern(
       x: number,
       y: number,
-      margin: number
+      margin: number,
+      ringFill: string,
+      centerFill: string
     ) {
       return `
-      <path class="position-ring" data-column="${x - margin}" data-row="${y -
-        margin}" d="M${x} ${y -
-        0.5}h6s.5 0 .5 .5v6s0 .5-.5 .5h-6s-.5 0-.5-.5v-6s0-.5 .5-.5zm1 1s-.5 0-.5 .5v4s0 .5 .5 .5h4s.5 0 .5-.5v-4s0-.5-.5-.5h-4z"/>
-      <path class="position-center" data-column="${x -
+      <path class="position-ring" fill="${ringFill}" data-column="${x -
+        margin}" data-row="${y - margin}" d="M${x} ${y -
+        0.5}h6s.5 0 .5 .5v6s0 .5-.5 .5h-6s-.5 0-.5-.5v-6s0-.5 .5-.5zm.75 1s-.25 0-.25 .25v4.5s0 .25 .25 .25h4.5s.25 0 .25-.25v-4.5s0-.25 -.25 -.25h-4.5z"/>
+      <path class="position-center" fill="${centerFill}" data-column="${x -
         margin +
         2}" data-row="${y - margin + 2}" d="M${x + 2} ${y +
         1.5}h2s.5 0 .5 .5v2s0 .5-.5 .5h-2s-.5 0-.5-.5v-2s0-.5 .5-.5z"/>
@@ -379,7 +417,8 @@ export class BpQRCode {
       margin: number,
       maskCenter: boolean,
       maskXToYRatio: number,
-      legacy: boolean
+      legacy: boolean,
+      moduleFill: string
     ) {
       let svg = '';
       for (let column = 0; column < count; column += 1) {
@@ -406,6 +445,7 @@ export class BpQRCode {
               : `
             <circle
                 class="module"
+                fill="${moduleFill}"
                 cx="${positionX}"
                 cy="${positionY}"
                 data-column="${column}"
@@ -459,9 +499,13 @@ export class BpQRCode {
   render() {
     return (
       <div id="qr-container">
-        <div id="icon-container" class={this.legacy ? 'hide' : ''}>
+        <div
+          id="icon-container"
+          style={this.legacy ? { display: 'none', visibility: 'hidden' } : {}}
+        >
           <div
             id="icon-wrapper"
+            style={{ width: `${18 * this.maskXToYRatio}%` }}
             data-column={this.moduleCount / 2}
             data-row={this.moduleCount / 2}
           >
