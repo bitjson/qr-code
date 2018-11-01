@@ -1,54 +1,107 @@
 <!DOCTYPE html>
-<html dir="ltr" lang="en">
+<html
+    dir="ltr"
+    lang="en"
+>
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
-  <title>BitPay QR Code</title>
-  <script src="https://unpkg.com/web-animations-js@2.3.1/web-animations.min.js"></script>
-  <script src="/build/bp-qr-code.js"></script>
-</head>
+    <head>
+        <meta charset="utf-8">
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+        >
+        <title>BitPay QR Code</title>
+        <script src="https://unpkg.com/web-animations-js@2.3.1/web-animations.min.js"></script>
+        <script src="/build/bp-qr-code.js"></script>
+    </head>
 
-<body style="background-color: #ddd">
+    <body style="background-color: #ddd">
 
-  <bp-qr-code id="qr1" contents="bitcoincash:?r=https://bitpay.com/i/exampleh3mCKGUna7v9S1z" module-color="#346E59" position-ring-color="#385A4E"
-    position-center-color="#70C559" mask-x-to-y-ratio="1.2" style="width: 60vw; height: 60vw; background-color: #fff">
-    <img src="assets/bch-bill.svg" slot="icon">
-  </bp-qr-code>
+        <bp-qr-code
+            id="qr1"
+            contents="bitcoincash:?r=https://bitpay.com/i/exampleh3mCKGUna7v9S1z"
+            module-color="#346E59"
+            position-ring-color="#385A4E"
+            position-center-color="#70C559"
+            mask-x-to-y-ratio="1.2"
+            style="width: 60vw; height: 60vw; background-color: #fff"
+        >
+            <img
+                src="assets/bch-bill.svg"
+                slot="icon"
+            >
+        </bp-qr-code>
 
-  <bp-qr-code contents="bitcoin:?r=https://bitpay.com/i/exampleh3mCKGUna7v9S1z" module-color="#CB5F12" position-ring-color="#593F33"
-    position-center-color="#F7931A" style="width: 200px;">
-    <img src="assets/btc.svg" slot="icon">
-  </bp-qr-code>
+        <bp-qr-code
+            contents="bitcoin:?r=https://bitpay.com/i/exampleh3mCKGUna7v9S1z"
+            module-color="#CB5F12"
+            position-ring-color="#593F33"
+            position-center-color="#F7931A"
+            style="width: 200px;"
+        >
+            <img
+                src="assets/btc.svg"
+                slot="icon"
+            >
+        </bp-qr-code>
 
-  <!-- alternative logo -->
-  <bp-qr-code contents="bitcoincash:?r=https://bitpay.com/i/exampleh3mCKGUna7v9S1z" module-color="#1c7d43" position-ring-color="#13532d"
-    position-center-color="#1c7d43" style="width: 200px;">
-    <img src="assets/bch.svg" slot="icon">
-  </bp-qr-code>
+        <!-- alternative logo -->
+        <bp-qr-code
+            contents="bitcoincash:?r=https://bitpay.com/i/exampleh3mCKGUna7v9S1z"
+            module-color="#1c7d43"
+            position-ring-color="#13532d"
+            position-center-color="#1c7d43"
+            style="width: 200px;"
+        >
+            <img
+                src="assets/bch.svg"
+                slot="icon"
+            >
+        </bp-qr-code>
 
-  <bp-qr-code contents="bitcoincash:?r=https://bitpay.com/i/exampleh3mCKGUna7v9S1z" protocol="bitcoincash" style="width: 150px;"></bp-qr-code>
+        <bp-qr-code
+            contents="bitcoincash:?r=https://bitpay.com/i/exampleh3mCKGUna7v9S1z"
+            protocol="bitcoincash"
+            style="width: 150px;"
+        ></bp-qr-code>
 
-  <bp-qr-code contents="bitcoin:?r=https://bitpay.com/i/exampleh3mCKGUna7v9S1z" protocol="bitcoin" style="width: 150px;"></bp-qr-code>
+        <bp-qr-code
+            contents="bitcoin:?r=https://bitpay.com/i/exampleh3mCKGUna7v9S1z"
+            protocol="bitcoin"
+            style="width: 150px;"
+        ></bp-qr-code>
 
-  <bp-qr-code contents="bitcoin:?r=https://bitpay.com/i/exampleh3mCKGUna7v9S1z" protocol="BCH" legacy="true" style="width: 150px; height: 150px; background-color: #fff">
-    <!-- should be ignored when legacy === true -->
-    <img src="assets/bch.svg" slot="icon">
-  </bp-qr-code>
+        <bp-qr-code
+            contents="https://bitpay.com/"
+            protocol="BCH"
+            legacy="true"
+            style="width: 150px; height: 150px; background-color: #fff"
+        >
+            <!-- should be ignored when legacy === true -->
+            <img
+                src="assets/bch.svg"
+                slot="icon"
+            >
+        </bp-qr-code>
 
-  <bp-qr-code contents="bitcoincash:?r=https://bitpay.com/i/exampleh3mCKGUna7v9S1z" module-color="#53749f" position-center-color="#53749f"
-    style="width: 100px;"></bp-qr-code>
+        <bp-qr-code
+            contents="bitcoincash:?r=https://bitpay.com/i/exampleh3mCKGUna7v9S1z"
+            module-color="#53749f"
+            position-center-color="#53749f"
+            style="width: 100px;"
+        ></bp-qr-code>
 
-  <script>
-    console.log('Hello from index.html');
+        <script>
+            console.log('Hello from index.html');
     document.getElementById('qr1').addEventListener('codeRendered', () => {
       console.log('QR code rendered. Animating...')
-      // document.getElementById('qr1').animateQRCode('RadialRipple');
       // document.getElementById('qr1').animateQRCode('FadeInTopDown');
-      document.getElementById('qr1').animateQRCode('MaterializeIn');
       // document.getElementById('qr1').animateQRCode('FadeInCenterOut');
+      // document.getElementById('qr1').animateQRCode('MaterializeIn');
+      document.getElementById('qr1').animateQRCode('RadialRipple');
+      // document.getElementById('qr1').animateQRCode('RadialRippleIn');
     });
-  </script>
-</body>
+        </script>
+    </body>
 
 </html>

@@ -25,12 +25,16 @@ declare global {
   interface HTMLAttributes {}
 }
 
+import {
+  AnimationPreset,
+  QRCodeAnimation,
+} from './components/bp-qr-code/animations';
 
 declare global {
 
   namespace StencilComponents {
     interface BpQrCode {
-      'animateQRCode': (animation?: any) => void;
+      'animateQRCode': (animation?: AnimationPreset | QRCodeAnimation) => void;
       'contents': string;
       'getModuleCount': () => number;
       'legacy': boolean;
