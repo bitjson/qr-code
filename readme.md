@@ -7,7 +7,7 @@ A framework-less `<qr-code>` element (a [Web Component](https://developer.mozill
 Import the `qr-code` component properly using your build system or framework, or use the standalone script in your HTML `<head>` element:
 
 ```html
-<script src="/path/to/qr-code.js"></script>
+<script src="https://unpkg.com/@bitjson/qr-code@1.0.0/dist/qr-code.js"></script>
 ```
 
 Then use the component anywhere in your HTML `<body>` element:
