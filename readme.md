@@ -1,14 +1,19 @@
+[![npm](https://img.shields.io/npm/v/@bitjson/qr-code)](https://www.npmjs.com/package/@bitjson/qr-code)
+[![npm downloads](https://img.shields.io/npm/dm/@bitjson/qr-code)](https://www.npmjs.com/package/@bitjson/qr-code)
+[![Follow Bitjson on Twitter](https://img.shields.io/badge/follow-bitjson-1DA1F2?logo=twitter)](https://twitter.com/bitjson)
+[![GitHub stars](https://img.shields.io/github/stars/bitjson/qr-code.svg?style=social&logo=github&label=Stars)](https://github.com/bitjson/qr-code)
+
 # [bitjson/qr-code](https://qr.bitjson.com/)
 
 A no-framework, customizable, animate-able, `<qr-code>` HTML element. It's just a single, self-contained [Web Component](https://developer.mozilla.org/en-US/docs/Web/Web_Components).
 
 https://user-images.githubusercontent.com/904007/221692053-1f4ab516-0f63-40e4-b1da-1922ba906963.mp4
 
-Try the interactive demo at: [qr.bitjson.com](https://qr.bitjson.com/)
+Try this interactive demo at: [qr.bitjson.com](https://qr.bitjson.com/)
 
-## Usage
+# Usage
 
-Import the `qr-code` component properly using your build system or framework, or use the standalone script in your HTML `<head>` element:
+Import `@bitjson/qr-code` using your build system or framework (e.g. `npm install @bitjson/qr-code`), or use the standalone script in your HTML `<head>` element:
 
 ```html
 <script src="https://unpkg.com/@bitjson/qr-code@1.0.0/dist/qr-code.js"></script>
