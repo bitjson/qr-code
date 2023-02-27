@@ -1,6 +1,8 @@
-# bitjson/qr-code
+# [bitjson/qr-code](https://qr.bitjson.com/)
 
-A framework-less `<qr-code>` element (a [Web Component](https://developer.mozilla.org/en-US/docs/Web/Web_Components)).
+A no-framework, customizable, animate-able, `<qr-code>` HTML element, built as a [Web Component](https://developer.mozilla.org/en-US/docs/Web/Web_Components). Try the demo at: [qr.bitjson.com](https://qr.bitjson.com/).
+
+https://user-images.githubusercontent.com/904007/221692053-1f4ab516-0f63-40e4-b1da-1922ba906963.mp4
 
 ## Usage
 
