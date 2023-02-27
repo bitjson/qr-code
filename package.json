@@ -1,7 +1,7 @@
 {
-  "name": "@bitpay/qr-code",
-  "version": "0.0.1",
-  "description": "BitPay's QR Code Web Component",
+  "name": "@bitjson/qr-code",
+  "version": "1.0.0",
+  "description": "QR Code Web Component",
   "module": "dist/esm/index.js",
   "main": "dist/index.js",
   "types": "dist/types/components.d.ts",

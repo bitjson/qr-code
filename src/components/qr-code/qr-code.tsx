@@ -6,14 +6,14 @@ import {
   Prop,
   Method,
   State,
-  Watch
+  Watch,
 } from '@stencil/core';
 
 import { addPlugin, animate } from 'just-animate';
 import { waapiPlugin } from 'just-animate/lib.es2015/web';
 addPlugin(waapiPlugin);
 
-// Un-comment to design animations:
+// Comment below and line 149 build for production:
 import { player } from 'just-animate/lib.es2015/tools';
 
 import qrcode from 'qrcode-generator';
@@ -21,13 +21,13 @@ import {
   getAnimationPreset,
   QRCodeAnimation,
   QRCodeEntity,
-  AnimationPreset
+  AnimationPreset,
 } from './animations';
 
 @Component({
-  tag: 'bp-qr-code',
-  styleUrl: 'bp-qr-code.css',
-  shadow: true
+  tag: 'qr-code',
+  styleUrl: 'qr-code.css',
+  shadow: true,
 })
 export class BpQRCode {
   @Element() qrCodeElement: HTMLElement;
@@ -38,7 +38,7 @@ export class BpQRCode {
   @Prop() positionRingColor: string = '#000';
   @Prop() positionCenterColor: string = '#000';
   @Prop() maskXToYRatio: number = 1;
-  @Prop() legacy: boolean = false;
+  @Prop() squares: boolean = false;
 
   @State() data: string;
   @State() moduleCount: number;
@@ -63,7 +63,7 @@ export class BpQRCode {
   @Watch('positionRingColor')
   @Watch('positionCenterColor')
   @Watch('maskXToYRatio')
-  @Watch('legacy')
+  @Watch('squares')
   updateQR() {
     /**
      * E.g. Firefox, as of Firefox 61
@@ -76,8 +76,8 @@ export class BpQRCode {
         ? true
         : false
       : realSlot
-        ? realSlot.assignedNodes().length > 0
-        : false;
+      ? realSlot.assignedNodes().length > 0
+      : false;
 
     this.data = this.generateQRCodeSVG(this.contents, hasSlot);
   }
@@ -108,10 +108,10 @@ export class BpQRCode {
       this.qrCodeElement.shadowRoot.querySelectorAll('#icon-wrapper')
     );
     const setEntityType = (array: Element[], entity: QRCodeEntity) => {
-      return array.map(element => {
+      return array.map((element) => {
         return {
           element,
-          entityType: entity
+          entityType: entity,
         };
       });
     };
@@ -120,7 +120,7 @@ export class BpQRCode {
       ...setEntityType(modules, QRCodeEntity.Module),
       ...setEntityType(rings, QRCodeEntity.PositionRing),
       ...setEntityType(centers, QRCodeEntity.PositionCenter),
-      ...setEntityType(icons, QRCodeEntity.Icon)
+      ...setEntityType(icons, QRCodeEntity.Icon),
     ]
       .map(({ element, entityType }) => {
         return {
@@ -130,10 +130,10 @@ export class BpQRCode {
           // https://developer.mozilla.org/en-US/docs/Web/API/SVGElement/dataset
           positionX: parseInt((element as any).dataset.column, 10),
           positionY: parseInt((element as any).dataset.row, 10),
-          entityType: entityType
+          entityType: entityType,
         };
       })
-      .map(entityInfo =>
+      .map((entityInfo) =>
         animation(
           entityInfo.element,
           entityInfo.positionX,
@@ -145,7 +145,7 @@ export class BpQRCode {
 
     const timeline = animate(animationAdditions);
 
-    // Un-comment to design animations:
+    // Comment out below to build for production:
     player(timeline);
 
     timeline.play();
@@ -168,8 +168,9 @@ export class BpQRCode {
         xmlns="http://www.w3.org/2000/svg"
         width="100%"
         height="100%"
-        viewBox="${0 - coordinateShift} ${0 -
-      coordinateShift} ${pixelSize} ${pixelSize}"
+        viewBox="${0 - coordinateShift} ${
+      0 - coordinateShift
+    } ${pixelSize} ${pixelSize}"
         preserveAspectRatio="xMinYMin meet">
     <rect
         width="100%"
@@ -179,7 +180,7 @@ export class BpQRCode {
         cx="${-coordinateShift}"
         cy="${-coordinateShift}"/>
     ${
-      this.legacy
+      this.squares
         ? void 0
         : renderQRPositionDetectionPatterns(
             this.moduleCount,
@@ -195,7 +196,7 @@ export class BpQRCode {
       margin,
       maskCenter,
       this.maskXToYRatio,
-      this.legacy,
+      this.squares,
       this.moduleColor,
       coordinateShift
     )}
@@ -245,15 +246,16 @@ export class BpQRCode {
       coordinateShift: number
     ) {
       return `
-      <path class="position-ring" fill="${ringFill}" data-column="${x -
-        margin}" data-row="${y - margin}" d="M${x - coordinateShift} ${y -
-        0.5 -
-        coordinateShift}h6s.5 0 .5 .5v6s0 .5-.5 .5h-6s-.5 0-.5-.5v-6s0-.5 .5-.5zm.75 1s-.25 0-.25 .25v4.5s0 .25 .25 .25h4.5s.25 0 .25-.25v-4.5s0-.25 -.25 -.25h-4.5z"/>
-      <path class="position-center" fill="${centerFill}" data-column="${x -
-        margin +
-        2}" data-row="${y - margin + 2}" d="M${x + 2 - coordinateShift} ${y +
-        1.5 -
-        coordinateShift}h2s.5 0 .5 .5v2s0 .5-.5 .5h-2s-.5 0-.5-.5v-2s0-.5 .5-.5z"/>
+      <path class="position-ring" fill="${ringFill}" data-column="${
+        x - margin
+      }" data-row="${y - margin}" d="M${x - coordinateShift} ${
+        y - 0.5 - coordinateShift
+      }h6s.5 0 .5 .5v6s0 .5-.5 .5h-6s-.5 0-.5-.5v-6s0-.5 .5-.5zm.75 1s-.25 0-.25 .25v4.5s0 .25 .25 .25h4.5s.25 0 .25-.25v-4.5s0-.25 -.25 -.25h-4.5z"/>
+      <path class="position-center" fill="${centerFill}" data-column="${
+        x - margin + 2
+      }" data-row="${y - margin + 2}" d="M${x + 2 - coordinateShift} ${
+        y + 1.5 - coordinateShift
+      }h2s.5 0 .5 .5v2s0 .5-.5 .5h-2s-.5 0-.5-.5v-2s0-.5 .5-.5z"/>
       `;
     }
 
@@ -263,7 +265,7 @@ export class BpQRCode {
       margin: number,
       maskCenter: boolean,
       maskXToYRatio: number,
-      legacy: boolean,
+      squares: boolean,
       moduleFill: string,
       coordinateShift: number
     ) {
@@ -273,7 +275,7 @@ export class BpQRCode {
         for (let row = 0; row < count; row += 1) {
           if (
             qr.isDark(column, row) &&
-            (legacy ||
+            (squares ||
               (!isPositioningElement(row, column, count) &&
                 !isRemovableCenter(
                   row,
@@ -284,11 +286,11 @@ export class BpQRCode {
                 )))
           ) {
             const positionY = row + margin;
-            svg += legacy
+            svg += squares
               ? `
-            <rect x="${positionX - 0.5 - coordinateShift}" y="${positionY -
-                  0.5 -
-                  coordinateShift}" width="1" height="1" />
+            <rect x="${positionX - 0.5 - coordinateShift}" y="${
+                  positionY - 0.5 - coordinateShift
+                }" width="1" height="1" />
             `
               : `
             <circle
@@ -310,8 +312,8 @@ export class BpQRCode {
       return row <= elemWidth
         ? column <= elemWidth || column >= count - elemWidth
         : column <= elemWidth
-          ? row >= count - elemWidth
-          : false;
+        ? row >= count - elemWidth
+        : false;
     }
 
     /**
@@ -349,7 +351,7 @@ export class BpQRCode {
       <div id="qr-container">
         <div
           id="icon-container"
-          style={this.legacy ? { display: 'none', visibility: 'hidden' } : {}}
+          style={this.squares ? { display: 'none', visibility: 'hidden' } : {}}
         >
           <div
             id="icon-wrapper"

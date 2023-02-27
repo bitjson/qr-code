@@ -28,51 +28,51 @@ declare global {
 import {
   AnimationPreset,
   QRCodeAnimation,
-} from './components/bp-qr-code/animations';
+} from './components/qr-code/animations';
 
 declare global {
 
   namespace StencilComponents {
-    interface BpQrCode {
+    interface QrCode {
       'animateQRCode': (animation?: AnimationPreset | QRCodeAnimation) => void;
       'contents': string;
       'getModuleCount': () => number;
-      'legacy': boolean;
       'maskXToYRatio': number;
       'moduleColor': string;
       'positionCenterColor': string;
       'positionRingColor': string;
       'protocol': string;
+      'squares': boolean;
     }
   }
 
-  interface HTMLBpQrCodeElement extends StencilComponents.BpQrCode, HTMLStencilElement {}
+  interface HTMLQrCodeElement extends StencilComponents.QrCode, HTMLStencilElement {}
 
-  var HTMLBpQrCodeElement: {
-    prototype: HTMLBpQrCodeElement;
-    new (): HTMLBpQrCodeElement;
+  var HTMLQrCodeElement: {
+    prototype: HTMLQrCodeElement;
+    new (): HTMLQrCodeElement;
   };
   interface HTMLElementTagNameMap {
-    'bp-qr-code': HTMLBpQrCodeElement;
+    'qr-code': HTMLQrCodeElement;
   }
   interface ElementTagNameMap {
-    'bp-qr-code': HTMLBpQrCodeElement;
+    'qr-code': HTMLQrCodeElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      'bp-qr-code': JSXElements.BpQrCodeAttributes;
+      'qr-code': JSXElements.QrCodeAttributes;
     }
   }
   namespace JSXElements {
-    export interface BpQrCodeAttributes extends HTMLAttributes {
+    export interface QrCodeAttributes extends HTMLAttributes {
       'contents'?: string;
-      'legacy'?: boolean;
       'maskXToYRatio'?: number;
       'moduleColor'?: string;
       'onCodeRendered'?: (event: CustomEvent) => void;
       'positionCenterColor'?: string;
       'positionRingColor'?: string;
       'protocol'?: string;
+      'squares'?: boolean;
     }
   }
 }

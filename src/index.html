@@ -1,107 +1,222 @@
 <!DOCTYPE html>
-<html
-    dir="ltr"
-    lang="en"
->
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+    />
+    <title>bitjson/qr-code</title>
+    <!-- Not needed for most browsers anymore: -->
+    <!-- <script src="https://unpkg.com/web-animations-js@2.3.1/web-animations.min.js"></script> -->
 
-    <head>
-        <meta charset="utf-8">
-        <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
-        >
-        <title>BitPay QR Code</title>
-        <script src="https://unpkg.com/web-animations-js@2.3.1/web-animations.min.js"></script>
-        <script src="/build/bp-qr-code.js"></script>
-    </head>
+    <!-- Development mode -->
+    <script src="/build/qr-code.js"></script>
+    <!-- Test production build on local filesystem -->
+    <!-- <script src="../dist/qr-code.js"></script> -->
+  </head>
 
-    <body style="background-color: #ddd">
+  <body style="background-color: #f3f3f3">
+    <h1>bitjson/qr-code</h1>
 
-        <bp-qr-code
-            id="qr1"
-            contents="bitcoincash:?r=https://bitpay.com/i/exampleh3mCKGUna7v9S1z"
-            module-color="#346E59"
-            position-ring-color="#385A4E"
-            position-center-color="#70C559"
-            mask-x-to-y-ratio="1.2"
-            style="width: 60vw; height: 60vw; background-color: #fff"
-        >
-            <img
-                src="assets/bch-bill.svg"
-                slot="icon"
-            >
-        </bp-qr-code>
+    <p>
+      This page makes fine-tuning animations easier. Use the animation previewer
+      at the bottom right to test the last-run animation at various speeds,
+      scrub through manually, or play in reverse. (To use the animation
+      previewer, uncomment the relevant lines in
+      <code>src/components/qr-code/qr-code.tsx</code>.)
+    </p>
 
-        <bp-qr-code
-            contents="bitcoin:?r=https://bitpay.com/i/exampleh3mCKGUna7v9S1z"
-            module-color="#CB5F12"
-            position-ring-color="#593F33"
-            position-center-color="#F7931A"
-            style="width: 200px;"
-        >
-            <img
-                src="assets/btc.svg"
-                slot="icon"
-            >
-        </bp-qr-code>
+    <p>
+      Custom animations can be defined as a single, pure function. For example,
+      <code>Custom1</code> uses only a few lines:
+    </p>
 
-        <!-- alternative logo -->
-        <bp-qr-code
-            contents="bitcoincash:?r=https://bitpay.com/i/exampleh3mCKGUna7v9S1z"
-            module-color="#1c7d43"
-            position-ring-color="#13532d"
-            position-center-color="#1c7d43"
-            style="width: 200px;"
-        >
-            <img
-                src="assets/bch.svg"
-                slot="icon"
-            >
-        </bp-qr-code>
+    <code>
+      <pre>
 
-        <bp-qr-code
-            contents="bitcoincash:?r=https://bitpay.com/i/exampleh3mCKGUna7v9S1z"
-            protocol="bitcoincash"
-            style="width: 150px;"
-        ></bp-qr-code>
+(targets, _x, _y, _count, entity) => ({
+    targets,
+    from: entity === 'module' ? Math.random() * 200 : 200,
+    duration: 500,
+    easing: 'cubic-bezier(1,1,0,.5)',
+    web: {
+        opacity: [0, 1],
+        scale: [0.3, 1.13, 0.93, 1],
+    },
+});
+    </pre
+      >
+    </code>
 
-        <bp-qr-code
-            contents="bitcoin:?r=https://bitpay.com/i/exampleh3mCKGUna7v9S1z"
-            protocol="bitcoin"
-            style="width: 150px;"
-        ></bp-qr-code>
+    <p>
+      See <code>components/qr-code/animations.ts</code> to review the built-in
+      presets. (Pull requests welcome!)
+    </p>
 
-        <bp-qr-code
-            contents="https://bitpay.com/"
-            protocol="BCH"
-            legacy="true"
-            style="width: 150px; height: 150px; background-color: #fff"
-        >
-            <!-- should be ignored when legacy === true -->
-            <img
-                src="assets/bch.svg"
-                slot="icon"
-            >
-        </bp-qr-code>
+    <p>
+      Use the controls below to test any animations defined in the page source.
+      Animations can independently control center icons, so the largest QR code
+      below includes an example icon.
+    </p>
 
-        <bp-qr-code
-            contents="bitcoincash:?r=https://bitpay.com/i/exampleh3mCKGUna7v9S1z"
-            module-color="#53749f"
-            position-center-color="#53749f"
-            style="width: 100px;"
-        ></bp-qr-code>
+    <small
+      >Note, a memory leak will eventually slow down this page after many
+      animation runs, but that doesn't matter if you're editing a custom
+      animation in the source and regularly reloading.</small
+    >
 
-        <script>
-            console.log('Hello from index.html');
-    document.getElementById('qr1').addEventListener('codeRendered', () => {
-      console.log('QR code rendered. Animating...')
-      // document.getElementById('qr1').animateQRCode('FadeInTopDown');
-      // document.getElementById('qr1').animateQRCode('FadeInCenterOut');
-      // document.getElementById('qr1').animateQRCode('MaterializeIn');
-      document.getElementById('qr1').animateQRCode('RadialRipple');
-      // document.getElementById('qr1').animateQRCode('RadialRippleIn');
-    });
-        </script>
-    </body>
+    <p>
+      Animation:
+      <select id="animationName">
+        <option>FadeInTopDown</option>
+        <option>FadeInCenterOut</option>
+        <option>MaterializeIn</option>
+        <option>RadialRipple</option>
+        <option>RadialRippleIn</option>
+        <option>Custom1</option>
+        <option selected="selected">Custom2</option>
+      </select>
+      <button onclick="play()">play</button>
+      <button onclick="next()">next</button>
+    </p>
 
+    <qr-code
+      id="qr1"
+      contents="bitcoincash:?r=https://bitjson.com/example-url"
+      module-color="#1c7d43"
+      position-ring-color="#13532d"
+      position-center-color="#70C559"
+      style="width: 60vw; height: 60vw; background-color: #fff"
+      onclick="play()"
+    >
+      <img src="assets/bch.svg" slot="icon" />
+    </qr-code>
+
+    <script>
+      function currentAnimationName() {
+        return document.getElementById('animationName').value;
+      }
+      function currentAnimation() {
+        const name = currentAnimationName();
+        switch (name) {
+          case 'Custom1':
+            return (targets, _x, _y, _count, entity) => ({
+              targets,
+              from: entity === 'module' ? Math.random() * 200 : 200,
+              duration: 500,
+              easing: 'cubic-bezier(.5,0,1,1)',
+              web: {
+                opacity: [1, 0],
+                scale: [1, 1.1, 0.5],
+              },
+            });
+          case 'Custom2':
+            return (targets, _x, _y, _count, entity) => ({
+              targets,
+              from: entity === 'module' ? Math.random() * 200 : 200,
+              duration: 500,
+              easing: 'cubic-bezier(1,1,0,.5)',
+              web: {
+                opacity: [0, 1],
+                scale: [0.3, 1.13, 0.93, 1],
+              },
+            });
+          default:
+            // If only a string is passed in, the component attempts to match it with a built-in preset.
+            return name;
+        }
+      }
+      function play() {
+        document.getElementById('qr1').animateQRCode(currentAnimation());
+      }
+      function next() {
+        const select = document.getElementById('animationName');
+        if (select.selectedIndex + 1 === select.options.length) {
+          select.selectedIndex = 0;
+        } else {
+          select.selectedIndex++;
+        }
+        play();
+      }
+      console.log('Hello from index.html');
+      document.getElementById('qr1').addEventListener('codeRendered', () => {
+        console.log('QR code rendered. Animating...');
+        play();
+      });
+    </script>
+
+    <p>
+      <strong
+        >The QR codes below will also play the above-set animation on
+        click.</strong
+      >
+    </p>
+
+    <p>A center icon with <code>mask-x-to-y-ratio="1.2"</code>:</p>
+    <qr-code
+      id="bill"
+      onclick="document.getElementById(this.id).animateQRCode(currentAnimation());"
+      contents="bitcoincash:?r=https://bitjson.com/i/example-invoice-id"
+      module-color="#346E59"
+      position-ring-color="#385A4E"
+      position-center-color="#70C559"
+      mask-x-to-y-ratio="1.2"
+      style="width: 200px"
+    >
+      <!-- Bitcoin Cash's old "bill" logo  -->
+      <img src="assets/bch-bill.svg" slot="icon" />
+    </qr-code>
+
+    <p>Different custom colors and icon (e.g. the BTC bitcoin fork):</p>
+    <qr-code
+      id="btc"
+      onclick="document.getElementById(this.id).animateQRCode(currentAnimation());"
+      contents="bitcoin:?r=https://bitjson.com/i/example-invoice-id"
+      module-color="#CB5F12"
+      position-ring-color="#593F33"
+      position-center-color="#F7931A"
+      style="width: 200px"
+    >
+      <img src="assets/btc.svg" slot="icon" />
+    </qr-code>
+
+    <p>Default style (all black, rounded modules):</p>
+
+    <qr-code
+      id="simple"
+      onclick="document.getElementById(this.id).animateQRCode(currentAnimation());"
+      contents="=https://bitjson.com/"
+      style="width: 150px"
+    ></qr-code>
+
+    <p>
+      The <code>squares</code> option renders modules as squares, but they can
+      still be individually animated:
+    </p>
+
+    <qr-code
+      id="squaresQr"
+      contents="https://bitjson.com/"
+      squares="true"
+      style="width: 150px; height: 150px; background-color: #fff"
+      onclick="document.getElementById(this.id).animateQRCode(currentAnimation());"
+    >
+      <!-- should be ignored when squares === true -->
+      <img src="assets/bch.svg" slot="icon" />
+    </qr-code>
+
+    <p>Scan test at small sizes:</p>
+    <qr-code
+      id="tiny"
+      onclick="document.getElementById(this.id).animateQRCode(currentAnimation());"
+      contents="bitcoincash:?r=https://bitjson.com/i/example-invoice-id"
+      module-color="#53749f"
+      position-center-color="#53749f"
+      style="width: 100px"
+    ></qr-code>
+
+    <!-- some extra space -->
+    <br /><br /><br /><br />
+  </body>
 </html>

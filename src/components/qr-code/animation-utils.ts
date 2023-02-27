@@ -10,13 +10,13 @@ export const distanceBetween = (
 enum HorizontalFocalPoint {
   Left,
   Middle,
-  Right
+  Right,
 }
 
 enum VerticalFocalPoint {
   Top,
   Center,
-  Bottom
+  Bottom,
 }
 
 export const translatePoint = (edgeLength: number) => {
@@ -31,14 +31,14 @@ export const translatePoint = (edgeLength: number) => {
         hFocus === HorizontalFocalPoint.Left
           ? x
           : hFocus === HorizontalFocalPoint.Right
-            ? x + edgeLength
-            : x + edgeLength / 2,
+          ? x + edgeLength
+          : x + edgeLength / 2,
       adjustedY:
         vFocus === VerticalFocalPoint.Top
           ? y
           : vFocus === VerticalFocalPoint.Bottom
-            ? y + edgeLength
-            : y + edgeLength / 2
+          ? y + edgeLength
+          : y + edgeLength / 2,
     };
   };
 };
@@ -80,8 +80,8 @@ export const innermostPoint = (
   return entity === QRCodeEntity.PositionCenter
     ? adjustCenter(x, y, horizontalFocus, verticalFocus)
     : entity === QRCodeEntity.PositionRing
-      ? adjustRing(x, y, horizontalFocus, verticalFocus)
-      : { adjustedX: x, adjustedY: y };
+    ? adjustRing(x, y, horizontalFocus, verticalFocus)
+    : { adjustedX: x, adjustedY: y };
 };
 
 /**
@@ -99,9 +99,9 @@ export const underdampedHarmonicOscillationMaximums = (
     throw new Error('This method only supports underdamped oscillation.');
   const omega = Math.sqrt(dampingRatio);
 
-  const amp = t => amplitude * Math.pow(Math.E, -damping * t);
-  const y = t => amp(t) * Math.cos(omega * t + offset);
-  const yMax = p =>
+  const amp = (t) => amplitude * Math.pow(Math.E, -damping * t);
+  const y = (t) => amp(t) * Math.cos(omega * t + offset);
+  const yMax = (p) =>
     (Math.atan(-damping / omega) + p * Math.PI - offset) / omega;
 
   const maximums: { time: number; amplitude: number }[] = [];
@@ -134,7 +134,7 @@ export const scaleOscillationsToOffset = (
   const scalingFactor = availableTime / unscaledEndTime;
   return maximums.map(({ time, amplitude }) => ({
     offset: beginningOffset + time * scalingFactor,
-    value: amplitude
+    value: amplitude,
   }));
 };
 
@@ -145,7 +145,7 @@ export const applyToValues = (
   }[],
   operation: (value: number) => number | string
 ) =>
-  keyframes.map(keyframe => ({
+  keyframes.map((keyframe) => ({
     offset: keyframe.offset,
-    value: operation(keyframe.value)
+    value: operation(keyframe.value),
   }));

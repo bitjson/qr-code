@@ -4,14 +4,14 @@ import {
   distanceBetween,
   underdampedHarmonicOscillationMaximums,
   applyToValues,
-  scaleOscillationsToOffset
+  scaleOscillationsToOffset,
 } from './animation-utils';
 
 export enum QRCodeEntity {
   Module = 'module',
   PositionRing = 'position-ring',
   PositionCenter = 'position-center',
-  Icon = 'icon'
+  Icon = 'icon',
 }
 
 export type QRCodeAnimation = (
@@ -27,7 +27,7 @@ export enum AnimationPreset {
   FadeInCenterOut = 'FadeInCenterOut',
   RadialRipple = 'RadialRipple',
   RadialRippleIn = 'RadialRippleIn',
-  MaterializeIn = 'MaterializeIn'
+  MaterializeIn = 'MaterializeIn',
 }
 
 const FadeInTopDown: QRCodeAnimation = (targets, _x, y, _count, _entity) => {
@@ -36,8 +36,8 @@ const FadeInTopDown: QRCodeAnimation = (targets, _x, y, _count, _entity) => {
     from: y * 20,
     duration: 300,
     web: {
-      opacity: [0, 1]
-    }
+      opacity: [0, 1],
+    },
   };
 };
 
@@ -50,8 +50,8 @@ const FadeInCenterOut: QRCodeAnimation = (targets, x, y, count, entity) => {
     from: distance * 20,
     duration: 200,
     web: {
-      opacity: [0, 1]
-    }
+      opacity: [0, 1],
+    },
   };
 };
 
@@ -60,8 +60,8 @@ const MaterializeIn: QRCodeAnimation = (targets, _x, _y, _count, entity) => ({
   from: entity === QRCodeEntity.Module ? Math.random() * 200 : 200,
   duration: 200,
   web: {
-    opacity: [0, 1]
-  }
+    opacity: [0, 1],
+  },
 });
 
 const beginOscillation = 0.2;
@@ -105,16 +105,16 @@ const RadialRipple: QRCodeAnimation = (targets, x, y, count, entity) => {
           ? [
               { offset: 0, value: 1 },
               { offset: 0.1, value: 0.7 },
-              { offset: 0.2, value: 1 }
+              { offset: 0.2, value: 1 },
             ]
           : [{ offset: 0, value: 1 }]),
         ...applyToValues(
           radialRippleOscillationKeyframes,
-          x => 1 + (x / amplitude) * 0.1
+          (x) => 1 + (x / amplitude) * 0.1
         ),
-        1
-      ]
-    }
+        1,
+      ],
+    },
   };
 };
 
@@ -141,17 +141,20 @@ const RadialRippleIn: QRCodeAnimation = (targets, x, y, count, entity) => {
           ? [
               { offset: 0, value: 1 },
               { offset: 0.1, value: 0.7 },
-              { offset: 0.2, value: 1 }
+              { offset: 0.2, value: 1 },
             ]
           : [{ offset: 0, value: 0 }]),
         ...applyToValues(
           radialRippleOscillationKeyframes,
-          x => 1 + (x / amplitude) * 0.1
+          (x) => 1 + (x / amplitude) * 0.1
         ),
-        1
+        1,
       ],
-      opacity: [{ offset: 0, value: 0 }, { offset: 0.05, value: 1 }]
-    }
+      opacity: [
+        { offset: 0, value: 0 },
+        { offset: 0.05, value: 1 },
+      ],
+    },
   };
 };
 

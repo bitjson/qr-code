@@ -1,12 +1,12 @@
 exports.config = {
-  namespace: 'bp-qr-code',
+  namespace: 'qr-code',
   outputTargets: [
     {
-      type: 'dist'
+      type: 'dist',
     },
     {
       type: 'www',
-      serviceWorker: false
-    }
-  ]
+      serviceWorker: false,
+    },
+  ],
 };
