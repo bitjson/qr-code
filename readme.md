@@ -1,8 +1,10 @@
 # [bitjson/qr-code](https://qr.bitjson.com/)
 
-A no-framework, customizable, animate-able, `<qr-code>` HTML element, built as a [Web Component](https://developer.mozilla.org/en-US/docs/Web/Web_Components). Try the demo at: [qr.bitjson.com](https://qr.bitjson.com/).
+A no-framework, customizable, animate-able, `<qr-code>` HTML element. It's just a single, self-contained [Web Component](https://developer.mozilla.org/en-US/docs/Web/Web_Components).
 
 https://user-images.githubusercontent.com/904007/221692053-1f4ab516-0f63-40e4-b1da-1922ba906963.mp4
+
+Try the interactive demo at: [qr.bitjson.com](https://qr.bitjson.com/)
 
 ## Usage
 
@@ -18,32 +20,38 @@ Then use the component anywhere in your HTML `<body>` element:
 <qr-code contents="https://bitjson.com"></qr-code>
 ```
 
-## Examples
+## Full Example
 
-Here's an example taking advantage of all configuration options:
+Here's an example in pure HTML using most features:
 
 ```html
 <qr-code
   id="qr1"
-  contents="https://bitjson.com"
+  contents="https://bitjson.com/"
   module-color="#1c7d43"
   position-ring-color="#13532d"
   position-center-color="#70c559"
   mask-x-to-y-ratio="1.2"
-  style="width: 200px; height: 200px; background-color: #fff"
+  style="
+    width: 200px;
+    height: 200px;
+    margin: 2em auto;
+    background-color: #fff;
+  "
 >
-  <img src="assets/icon.svg" slot="icon" />
+  <img src="assets/1.2-x-to-y-ratio-icon.svg" slot="icon" />
 </qr-code>
+
 <script>
-  setTimeout(() => {
+  document.getElementById('qr1').addEventListener('codeRendered', () => {
     document.getElementById('qr1').animateQRCode('MaterializeIn');
-  }, 1000);
+  });
 </script>
 ```
 
-For more examples, review [`src/index.html`](src/index.html).
-
 ## Animations
+
+Animate in, animate on user interactions like URL hits or detected payments, and/or animate out when the QR code interaction is complete.
 
 Several preset animations are available, simply run them with the element's `animateQRCode` method:
 
@@ -51,7 +59,7 @@ Several preset animations are available, simply run them with the element's `ani
 document.getElementById('qr1').animateQRCode('RadialRipple');
 ```
 
-The current, built-in presets are:
+Available built-in presets:
 
 - `FadeInTopDown`
 - `FadeInCenterOut`
@@ -59,27 +67,25 @@ The current, built-in presets are:
 - `RadialRipple`
 - `RadialRippleIn`
 
-Custom animations can be defined with a single, pure function; rather than an animation preset name, simply pass in the function:
+You can also design your own custom animations! Just pass a function to the `qr-code`'s `animateQRCode` method, e.g.:
 
 ```js
-// A layered, "explosion" fade-in
 document
   .getElementById('qr1')
   .animateQRCode((targets, _x, _y, _count, entity) => ({
     targets,
     from: entity === 'module' ? Math.random() * 200 : 200,
     duration: 500,
-    easing: 'cubic-bezier(1,1,0,.5)',
-    web: {
-      opacity: [0, 1],
-      scale: [0.3, 1.13, 0.93, 1],
-    },
+    easing: 'cubic-bezier(.5,0,1,1)',
+    web: { opacity: [1, 0], scale: [1, 1.1, 0.5] },
   }));
 ```
 
-The built-in presets are also defined using this API. Review [`src/components/qr-code/animations.ts`](src/components/qr-code/animations.ts) to see how they work. Pull request for new presets are welcome!
+The [built-in presets use this API internally](src/components/qr-code/animations.ts), so review those for guidance and inspiration. Pull request for new presets are welcome!
 
-The **animation previewer makes fine-tuning animations much easier**: try it by cloning this repo and running the `start` package script:
+## Animation Previewer
+
+The **animation previewer makes fine-tuning animations much easier**: try it by cloning this repo and running the live-reloading package script:
 
 ```
 git clone https://github.com/bitjson/qr-code.git
@@ -87,6 +93,8 @@ cd qr-code
 npm ci
 npm start
 ```
+
+Then work on your animation in `src/index.html` using the animation previewer (at the bottom right of the window) to test the last-run animation at various speeds, scrub through it manually, or play it in reverse.
 
 ### Production build
 
@@ -96,7 +104,7 @@ Disable the `just-animate` player in [`src/components/qr-code/qr-code.tsx`](src/
 npm run build
 ```
 
-You can test the built component by pointing the script in [`src/index.html`](src/index.html) to `dist/qr-code.js` and then opening `src/index.html` via the local filesystem.
+You can test the built component by pointing the script in [`index.html`](index.html) to `dist/qr-code.js` and opening the page via the local filesystem.
 
 ### Run the tests
 
