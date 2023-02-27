@@ -1,6 +1,6 @@
 {
   "name": "@bitjson/qr-code",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "QR Code Web Component",
   "module": "dist/esm/index.js",
   "main": "dist/index.js",

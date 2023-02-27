@@ -16,7 +16,7 @@ Try this interactive demo at: [qr.bitjson.com](https://qr.bitjson.com/)
 Import `@bitjson/qr-code` using your build system or framework (e.g. `npm install @bitjson/qr-code`), or use the standalone script in your HTML `<head>` element:
 
 ```html
-<script src="https://unpkg.com/@bitjson/qr-code@1.0.0/dist/qr-code.js"></script>
+<script src="https://unpkg.com/@bitjson/qr-code@1.0.1/dist/qr-code.js"></script>
 ```
 
 Then use the component anywhere in your HTML `<body>` element:
