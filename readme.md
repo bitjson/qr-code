@@ -3,7 +3,7 @@
 [![Follow Bitjson on Twitter](https://img.shields.io/badge/follow-bitjson-1DA1F2?logo=twitter)](https://twitter.com/bitjson)
 [![GitHub stars](https://img.shields.io/github/stars/bitjson/qr-code.svg?style=social&logo=github&label=Stars)](https://github.com/bitjson/qr-code)
 
-# [bitjson/qr-code](https://qr.bitjson.com/)
+# [`@bitjson/qr-code`](https://qr.bitjson.com/)
 
 A no-framework, customizable, animate-able, `<qr-code>` HTML element. It's just a single, self-contained [Web Component](https://developer.mozilla.org/en-US/docs/Web/Web_Components).
 
@@ -101,7 +101,7 @@ npm start
 
 Then work on your animation in `src/index.html` using the animation previewer (at the bottom right of the window) to test the last-run animation at various speeds, scrub through it manually, or play it in reverse.
 
-### Production build
+## Production build
 
 Disable the `just-animate` player in [`src/components/qr-code/qr-code.tsx`](src/components/qr-code/qr-code.tsx), then build:
 
@@ -110,9 +110,3 @@ npm run build
 ```
 
 You can test the built component by pointing the script in [`index.html`](index.html) to `dist/qr-code.js` and opening the page via the local filesystem.
-
-### Run the tests
-
-```bash
-npm test
-```

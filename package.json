@@ -18,20 +18,17 @@
     "test": "jest",
     "test.watch": "jest --watch"
   },
-  "dependencies": {
-    "just-animate": "^2.5.0",
-    "qrcode-generator": "^1.4.0"
-  },
   "devDependencies": {
     "@stencil/core": "^0.10.2",
     "@types/jest": "^21.1.1",
-    "jest": "^21.2.1"
+    "jest": "^21.2.1",
+    "just-animate": "^2.5.0",
+    "qrcode-generator": "^1.4.0"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bitjson/qr-code.git"
   },
-  "author": "Ionic Team",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/bitjson/qr-code"
