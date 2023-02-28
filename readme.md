@@ -5,7 +5,7 @@
 
 # [`<qr-code>`](https://qr.bitjson.com/)
 
-A zero-dependency, no-framework, customizable, animate-able, `<qr-code>` HTML element. It's just a single, self-contained [Web Component](https://developer.mozilla.org/en-US/docs/Web/Web_Components).
+A no-framework, no-dependencies, customizable, animate-able, SVG-based `<qr-code>` HTML element. It's just a single, self-contained [Web Component](https://developer.mozilla.org/en-US/docs/Web/Web_Components).
 
 https://user-images.githubusercontent.com/904007/221692053-1f4ab516-0f63-40e4-b1da-1922ba906963.mp4
 
