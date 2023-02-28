@@ -14,7 +14,7 @@ import { waapiPlugin } from 'just-animate/lib.es2015/web';
 addPlugin(waapiPlugin);
 
 // Comment below and line 149 build for production:
-// import { player } from 'just-animate/lib.es2015/tools';
+import { player } from 'just-animate/lib.es2015/tools';
 
 import qrcode from 'qrcode-generator';
 import {
@@ -146,7 +146,7 @@ export class BpQRCode {
     const timeline = animate(animationAdditions);
 
     // Comment out below to build for production:
-    // player(timeline);
+    player(timeline);
 
     timeline.play();
   }
